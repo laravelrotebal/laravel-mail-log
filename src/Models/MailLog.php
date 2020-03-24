@@ -11,4 +11,9 @@ class MailLog extends Model
     protected $casts = [
         'data' => 'array',
     ];
+
+    public function occuredEntity() {
+        return $this->morphTo();
+    }
+
 }
