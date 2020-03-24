@@ -12,6 +12,10 @@ class MailLog extends Model
         'data' => 'array',
     ];
 
+    public function occurredProcess() {
+        return $this->morphTo();
+    }
+
     public function occurredEntity() {
         return $this->morphTo();
     }
