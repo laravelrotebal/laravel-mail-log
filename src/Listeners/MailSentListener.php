@@ -56,7 +56,7 @@ class MailSentListener
 
             $entityOccured = $event->data[OccurrableEntity::getOccuredKey()] ?? null;
             if($entityOccured && $entityOccured instanceof Model) {
-                $log->entityOccurred()->save($entityOccured);
+                $log->occuredEntity()->associate($entityOccured)->save();
             }
 
         } catch (\Throwable $e) {
