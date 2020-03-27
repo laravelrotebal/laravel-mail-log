@@ -10,23 +10,27 @@ use Illuminate\Support\Facades\Log;
 class MailSentListener
 {
     /**
+     * @var LaravelMailLog
+     */
+    private $mailLog;
+
+    /**
      * Create the event listener.
      *
-     * @return void
+     * @param LaravelMailLog $mailLog
      */
-    public function __construct()
+    public function __construct(LaravelMailLog $mailLog)
     {
-        //
+        $this->mailLog = $mailLog;
     }
 
     /**
      * Handle the event.
      *
      * @param MessageSent $event
-     * @param LaravelMailLog $mailLog
      * @return void
      */
-    public function handle(MessageSent $event, LaravelMailLog $mailLog)
+    public function handle(MessageSent $event)
     {
         try {
             $log = MailLog::whereMessageId($event->message->getId())->first();
@@ -35,7 +39,7 @@ class MailSentListener
                 $log->status = MailLog::STATUS_SENT;
                 $log->save();
             } else {
-                $mailLog->saveLog($event->message, MailLog::STATUS_SENT);
+                $this->mailLog->saveLog($event->message, MailLog::STATUS_SENT);
             }
 
         } catch (\Throwable $e) {
