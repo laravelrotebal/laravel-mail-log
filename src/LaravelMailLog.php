@@ -11,7 +11,7 @@ use Swift_Message;
 class LaravelMailLog
 {
 
-    public function saveLog(Swift_Message $msg, $status = MailLog::STATUS_SENDING) {
+    public function saveLog(Swift_Message $msg, array $data, $status = MailLog::STATUS_SENDING) {
         $parts = $msg->getChildren();
         $body = $msg->getBody();
         if (! empty($parts)) {
@@ -26,7 +26,7 @@ class LaravelMailLog
         $to = $msg->getTo() ?? [];
         $cc = $msg->getCc() ?? [];
         $bcc = $msg->getBcc() ?? [];
-        $data = [
+        $insert = [
             'to' => implode(', ', is_array($to) ? array_keys($to) : $to),
             'cc' => implode(', ', is_array($cc) ? array_keys($cc) : $cc),
             'bcc' => implode(', ', is_array($bcc) ? array_keys($bcc) : $bcc),
@@ -36,10 +36,10 @@ class LaravelMailLog
             'status' => $status,
             'data' => [],
         ];
-        $log = MailLog::create($data);
+        $log = MailLog::create($insert);
 
-        $occuredEntity = $event->data[Occurrable::getOccuredEntityKey()] ?? null;
-        $occuredProcess = $event->data[Occurrable::getOccuredProcessKey()] ?? null;
+        $occuredEntity = $data[Occurrable::getOccuredEntityKey()] ?? null;
+        $occuredProcess = $data[Occurrable::getOccuredProcessKey()] ?? null;
 
         if ($occuredEntity && $occuredEntity instanceof Model) {
             $log->occurredEntity()->associate($occuredEntity)->save();
@@ -49,7 +49,7 @@ class LaravelMailLog
             $log->occurredProcess()->associate($occuredProcess)->save();
         }
 
-        $recipient = $event->data[Recipientable::getRecipientKey()] ?? null;
+        $recipient = $data[Recipientable::getRecipientKey()] ?? null;
 
         if ($recipient && $recipient instanceof Model) {
             $log->recipient()->associate($recipient)->save();

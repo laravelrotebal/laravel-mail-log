@@ -32,7 +32,7 @@ class MessageSendingListener
     public function handle(MessageSending $event)
     {
         try {
-            $this->mailLog->saveLog($event->message);
+            $this->mailLog->saveLog($event->message, $event->data);
         } catch (\Throwable $e) {
             Log::debug('Failed to save mail log ['.$e->getMessage().']');
         }

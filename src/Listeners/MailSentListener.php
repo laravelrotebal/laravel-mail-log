@@ -39,7 +39,7 @@ class MailSentListener
                 $log->status = MailLog::STATUS_SENT;
                 $log->save();
             } else {
-                $this->mailLog->saveLog($event->message, MailLog::STATUS_SENT);
+                $this->mailLog->saveLog($event->message, $event->data, MailLog::STATUS_SENT);
             }
 
         } catch (\Throwable $e) {
