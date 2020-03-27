@@ -11,4 +11,19 @@ class MailLog extends Model
     protected $casts = [
         'data' => 'array',
     ];
+
+    public function occurredProcess()
+    {
+        return $this->morphTo();
+    }
+
+    public function occurredEntity()
+    {
+        return $this->morphTo();
+    }
+
+    public function recipient()
+    {
+        return $this->morphTo();
+    }
 }
