@@ -30,4 +30,9 @@ class MailLog extends Model
     {
         return $this->morphTo();
     }
+
+    public function errors()
+    {
+        return $this->hasMany(MailLogError::class);
+    }
 }
