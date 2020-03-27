@@ -12,6 +12,10 @@ class MailLog extends Model
         'data' => 'array',
     ];
 
+    public const STATUS_SENDING = 'sending';
+    public const STATUS_SENT = 'sent';
+    public const STATUS_ERROR = 'error';
+
     public function occurredProcess()
     {
         return $this->morphTo();
