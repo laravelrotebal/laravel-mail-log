@@ -27,10 +27,9 @@ class MessageSendingListener
      * Handle the event.
      *
      * @param MessageSending $event
-     * @param LaravelMailLog $mailLog
      * @return void
      */
-    public function handle(MessageSending $event, LaravelMailLog $mailLog)
+    public function handle(MessageSending $event)
     {
         try {
             $this->mailLog->saveLog($event->message);
