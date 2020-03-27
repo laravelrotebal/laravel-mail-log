@@ -6,7 +6,7 @@ use Giuga\LaravelMailLog\Models\MailLog;
 use Giuga\LaravelMailLog\Traits\Occurrable;
 use Giuga\LaravelMailLog\Traits\Recipientable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Mail\Events\MessageSent;
+use Illuminate\Mail\Events\MessageSending;
 use Illuminate\Support\Facades\Log;
 
 class MessageSendingListener
@@ -24,10 +24,10 @@ class MessageSendingListener
     /**
      * Handle the event.
      *
-     * @param MessageSent $event
+     * @param MessageSending $event
      * @return void
      */
-    public function handle(MessageSent $event)
+    public function handle(MessageSending $event)
     {
         try {
             $msg = $event->message;

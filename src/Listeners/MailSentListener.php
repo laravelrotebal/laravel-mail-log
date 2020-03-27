@@ -3,9 +3,6 @@
 namespace Giuga\LaravelMailLog\Listeners;
 
 use Giuga\LaravelMailLog\Models\MailLog;
-use Giuga\LaravelMailLog\Traits\Occurrable;
-use Giuga\LaravelMailLog\Traits\Recipientable;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Mail\Events\MessageSent;
 use Illuminate\Support\Facades\Log;
 
